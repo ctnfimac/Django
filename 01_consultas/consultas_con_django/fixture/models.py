@@ -30,7 +30,25 @@ class Grupo(models.Model):
     descripcion = models.CharField('Grupo', max_length=2, null= False)
 
 
-
 class Equipo(models.Model):
     nombre_equipo = models.CharField('Equipo', max_length=50, null= False)
     grupo = models.ForeignKey('Grupo', Grupo)
+
+class Provincia(models.Model):
+    descripcion = models.CharField('Provincia', max_length=50, null=False)
+
+class Localidad(models.Model):
+    descripcion = models.CharField('Localidad', max_length=50, null=False)
+    provincia = models.ForeignKey('Provincia',Provincia, null=False)
+
+class Estadio(models.Model):
+    nombre = models.CharField('Estadio', max_length=100, null=False, blank=False)
+    capacidad = models.IntegerField('Capacidad',null=False)
+    localidad = models.ForeignKey('Localidad', Localidad, null=False)
+
+     
+class Partido(models.Model):
+    goles = models.IntegerField('Goles',null=false,default=0)
+    fecha_hora = models.DateField('Hora y fecha', null= True, blank= False)
+    estadio = models.ForeignKey('Estadio', Estadio, null= False, blank= False)
+
