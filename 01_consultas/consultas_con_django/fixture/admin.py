@@ -4,6 +4,8 @@ from .models import *
 
 
 class IntegranteAdmin(admin.ModelAdmin):
-    list_display = ('nombre','fecha_nacimiento')
+    list_display = ('cod_integrante','nombre','fecha_nacimiento',)
+    date_hierarchy = ('fecha_nacimiento')
+
 
 admin.site.register(Integrante, IntegranteAdmin)

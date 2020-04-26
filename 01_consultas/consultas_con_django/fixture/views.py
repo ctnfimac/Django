@@ -32,3 +32,26 @@ def getIntegrantes(request):
     #         ]        
     #     }
     return JsonResponse(respuesta)
+
+
+"""
+@brief: integrantesPorFechaDeNacimiento
+@details: obtengo todos los integrantes que tengan una fecha de nacimiento 
+          específica.
+"""
+def integrantesPorFechaDeNacimiento(request, fecha_nacimiento):
+    integrantes = Integrante.objects.filter(fecha_nacimiento = fecha_nacimiento)
+    respuesta = {
+            "type": "Integrante",
+            "features": []
+        }
+    for integrante in integrantes:
+        dato = {
+            "cod_integrante": integrante.cod_integrante,
+            "nombre": integrante.nombre,
+            "fecha_nacimiento": integrante.fecha_nacimiento
+        }   
+        respuesta["features"].append(dato)     
+        
+    return JsonResponse(respuesta)
+
