@@ -61,3 +61,33 @@ def integrantesPorFechaDeNacimiento(request, fecha_nacimiento):
         
     return JsonResponse(respuesta)
 
+
+
+"""
+@brief: integrantesPorRangoDeFechaDeNacimiento
+@details: obtengo todos los integrantes esten dentro del rango de fecha de nacimiento
+          indicada
+"""
+def integrantesPorRangoDeFechaDeNacimiento(request, fecha_inicial, fecha_final):
+    respuesta = {
+        "type": "Integrante",
+        "cantidad": 0,
+        "integrantes": []
+    }
+    try:
+        tabla = Integrante.objects.filter(
+                    fecha_nacimiento__gte = fecha_inicial, 
+                    fecha_nacimiento__lte = fecha_final
+                )
+        for row in tabla:
+            integrante = {
+                "cod_integrante": row.cod_integrante,
+                "nombre": row.nombre,
+                "fecha_nacimiento": row.fecha_nacimiento
+            }
+            respuesta["integrantes"].append(integrante)
+        respuesta["cantidad"] = len(tabla)
+    except Exception as e:
+        respuesta["error"] = str(e)
+        
+    return JsonResponse(respuesta)
