@@ -40,18 +40,24 @@ def getIntegrantes(request):
           específica.
 """
 def integrantesPorFechaDeNacimiento(request, fecha_nacimiento):
-    integrantes = Integrante.objects.filter(fecha_nacimiento = fecha_nacimiento)
-    respuesta = {
-            "type": "Integrante",
-            "features": []
-        }
-    for integrante in integrantes:
-        dato = {
-            "cod_integrante": integrante.cod_integrante,
-            "nombre": integrante.nombre,
-            "fecha_nacimiento": integrante.fecha_nacimiento
-        }   
-        respuesta["features"].append(dato)     
+    try:
+        integrantes = Integrante.objects.filter(fecha_nacimiento = fecha_nacimiento)
+        respuesta = {
+                "type": "Integrante",
+                "features": []
+            }
+        for integrante in integrantes:
+            dato = {
+                "cod_integrante": integrante.cod_integrante,
+                "nombre": integrante.nombre,
+                "fecha_nacimiento": integrante.fecha_nacimiento
+            }   
+            respuesta["features"].append(dato)   
+    except Exception as e:
+        respuesta = {
+                "type": "Integrante",
+                "error": str(e)
+            }
         
     return JsonResponse(respuesta)
 
