@@ -5,7 +5,15 @@ from .models import *
 
 class IntegranteAdmin(admin.ModelAdmin):
     list_display = ('cod_integrante','nombre','fecha_nacimiento',)
-    date_hierarchy = ('fecha_nacimiento')
-
+    # date_hierarchy = ('fecha_nacimiento')
 
 admin.site.register(Integrante, IntegranteAdmin)
+
+
+
+class JugadorAdmin(IntegranteAdmin):
+    list_display = IntegranteAdmin.list_display + ('fecha_debut','cant_goles')
+    date_hierarchy = ('fecha_debut')
+
+admin.site.register(Jugador, JugadorAdmin)
+
