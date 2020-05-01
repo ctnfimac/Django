@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from fixture.models import Integrante
+from fixture.models import Integrante, Jugador
+from django.db.models.functions import Lower # sirve para poder convertir en minuscula a los campos de una query
 
 
 # Create your views here.
@@ -90,4 +91,40 @@ def integrantesPorRangoDeFechaDeNacimiento(request, fecha_inicial, fecha_final):
     except Exception as e:
         respuesta["error"] = str(e)
         
+    return JsonResponse(respuesta)
+
+
+"""
+@brief: getJugadores
+@details: obtengo todos los jugadores ordenados por nombre o no
+"""
+def getJugadores(request):
+    ordenamiento = request.GET['orden']
+    tipoDeOrdenamiento = ['cod_integrante','nombre','fecha_nacimiento','fecha_debut','cant_goles']
+    respuesta = {
+        "type": "Jugador",
+        "cantidad": 0,
+        "jugadores": []
+    }
+    try:
+        if ordenamiento in tipoDeOrdenamiento:
+            # El lower es para que no hayan problemas si las palabras inician
+            # con minúsculas o mayúsculas
+            registros = Jugador.objects.all().order_by(ordenamiento) if ordenamiento in 'cant_goles' else Jugador.objects.all().order_by(Lower(ordenamiento)) 
+            for registro in registros:
+                dato = {
+                    "cod_integrante": registro.cod_integrante,
+                    "nombre": registro.nombre,
+                    "fecha_nacimiento": registro.fecha_nacimiento,
+                    "fecha_debut": registro.fecha_debut,
+                    "cant_goles": registro.cant_goles       
+                }
+                respuesta["jugadores"].append(dato)
+            respuesta["cantidad"] = len(registros)
+    except Exception as e:
+        respuesta = {
+            "type": "Jugador",
+            "error": str(e)
+        }
+
     return JsonResponse(respuesta)

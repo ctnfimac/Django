@@ -6,3 +6,8 @@ https://docs.djangoproject.com/en/2.1/topics/http/urls/
 2)Para las querys
 
 https://docs.djangoproject.com/en/3.0/topics/db/queries/
+
+
+3)Para los request
+
+https://docs.djangoproject.com/en/3.0/ref/request-response/
