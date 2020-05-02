@@ -99,18 +99,25 @@ def integrantesPorRangoDeFechaDeNacimiento(request, fecha_inicial, fecha_final):
 @details: obtengo todos los jugadores ordenados por nombre o no
 """
 def getJugadores(request):
-    ordenamiento = request.GET['orden']
-    tipoDeOrdenamiento = ['cod_integrante','nombre','fecha_nacimiento','fecha_debut','cant_goles']
-    respuesta = {
-        "type": "Jugador",
-        "cantidad": 0,
-        "jugadores": []
-    }
     try:
-        if ordenamiento in tipoDeOrdenamiento:
-            # El lower es para que no hayan problemas si las palabras inician
-            # con minúsculas o mayúsculas
-            registros = Jugador.objects.all().order_by(ordenamiento) if ordenamiento in 'cant_goles' else Jugador.objects.all().order_by(Lower(ordenamiento)) 
+        campo = request.GET.get('orden')
+        tipo_orden = request.GET.get('tipo_orden','')
+        camposDeOrdenamiento = ['cod_integrante','nombre','fecha_nacimiento','fecha_debut','cant_goles']
+        respuesta = {
+            "type": "Jugador",
+            "cantidad": 0,
+            "jugadores": []
+        }
+    
+        if campo in camposDeOrdenamiento:
+            if tipo_orden == 'desc':
+                campo_desc = "-" + campo
+                # El lower es para que no hayan problemas si las palabras inician
+                # con minúsculas o mayúsculas
+                registros = Jugador.objects.all().order_by(campo_desc) if campo in 'cant_goles' else Jugador.objects.all().order_by(Lower(campo).desc())
+            else:
+                registros = Jugador.objects.all().order_by(campo) if campo in 'cant_goles' else Jugador.objects.all().order_by(Lower(campo)) 
+
             for registro in registros:
                 dato = {
                     "cod_integrante": registro.cod_integrante,

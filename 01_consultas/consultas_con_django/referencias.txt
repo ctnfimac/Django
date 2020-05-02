@@ -7,7 +7,14 @@ https://docs.djangoproject.com/en/2.1/topics/http/urls/
 
 https://docs.djangoproject.com/en/3.0/topics/db/queries/
 
+https://docs.djangoproject.com/en/3.0/ref/models/querysets/#queryset-api
+
 
 3)Para los request
 
 https://docs.djangoproject.com/en/3.0/ref/request-response/
+
+tarea:
+ obtener el jugador con mas goles
+ obtener el jugador con menos goles
+ averiguar cuantos jugadores hay en total
