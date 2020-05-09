@@ -14,13 +14,13 @@ def getIntegrantes(request):
 
     for registro in registros:
         dato = {
-            "cod_integrante": registro.cod_integrante,
+            "id": registro.id,
             "nombre": registro.nombre,
             "fecha_nacimiento": registro.fecha_nacimiento        
         }
         respuesta["features"].append(dato)
     # test = {
-    #         "cod_integrante": '001',
+    #         "id": '001',
     #         "nombre": 'teodorico',
     #         "fecha_nacimiento": '08-10-1957',
     #         "telefonos":[
@@ -49,7 +49,7 @@ def integrantesPorFechaDeNacimiento(request, fecha_nacimiento):
             }
         for integrante in integrantes:
             dato = {
-                "cod_integrante": integrante.cod_integrante,
+                "id": integrante.id,
                 "nombre": integrante.nombre,
                 "fecha_nacimiento": integrante.fecha_nacimiento
             }   
@@ -82,7 +82,7 @@ def integrantesPorRangoDeFechaDeNacimiento(request, fecha_inicial, fecha_final):
                 )
         for row in tabla:
             integrante = {
-                "cod_integrante": row.cod_integrante,
+                "id": row.id,
                 "nombre": row.nombre,
                 "fecha_nacimiento": row.fecha_nacimiento
             }
@@ -102,7 +102,7 @@ def getJugadores(request):
     try:
         campo = request.GET.get('orden')
         tipo_orden = request.GET.get('tipo_orden','')
-        camposDeOrdenamiento = ['cod_integrante','nombre','fecha_nacimiento','fecha_debut','cant_goles']
+        camposDeOrdenamiento = ['id','nombre','fecha_nacimiento','fecha_debut','cant_goles']
         respuesta = {
             "type": "Jugador",
             "cantidad": 0,
@@ -120,7 +120,7 @@ def getJugadores(request):
 
             for registro in registros:
                 dato = {
-                    "cod_integrante": registro.cod_integrante,
+                    "id": registro.id,
                     "nombre": registro.nombre,
                     "fecha_nacimiento": registro.fecha_nacimiento,
                     "fecha_debut": registro.fecha_debut,

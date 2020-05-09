@@ -1,19 +1,19 @@
 from django.contrib import admin
 from .models import *
-# Register your models here.
 
 
-class IntegranteAdmin(admin.ModelAdmin):
-    list_display = ('cod_integrante','nombre','fecha_nacimiento',)
-    # date_hierarchy = ('fecha_nacimiento')
+class PosicionAdmin(admin.ModelAdmin):
+    list_display = ('id','descripcion')
+    #read_only = ['id']
 
-admin.site.register(Integrante, IntegranteAdmin)
-
-
-
-class JugadorAdmin(IntegranteAdmin):
-    list_display = IntegranteAdmin.list_display + ('fecha_debut','cant_goles')
+##
+# Jugador
+###
+class JugadorAdmin(admin.ModelAdmin):
+    list_display =  ('id','nombre','fecha_nacimiento','fecha_debut','cant_goles','posicion_id')
     date_hierarchy = ('fecha_debut')
 
+
+admin.site.register(Posicion, PosicionAdmin)
 admin.site.register(Jugador, JugadorAdmin)
 
